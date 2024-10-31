@@ -1,7 +1,7 @@
 module.exports = {
     //Explain what function A does
+    
     //STUDENTS
-
     students: [
         {
             adminNo: "221609S",
@@ -42,12 +42,12 @@ module.exports = {
         else {
             this.students.forEach(
                 (student, index) => {
-                    if (student.adminNo === a) {
+                    if (student.adminNo.toLowerCase() === a.toLowerCase()) {
                         this.students.splice(index, 1);
                     }
                 }
             )
-            return "Student deleted successfully";
+            return "Student record deleted successfully";
         }
     
     },
@@ -72,7 +72,7 @@ module.exports = {
     },
 
     //Assign a course to a student by using their admin number
-    assignCourse(a, c) {
+    assignStudentToCourse(a, c) {
         const existingStudent = this.students.find(student => student.adminNo.toLowerCase() === a.toLowerCase());
 
         if (!existingStudent) {
@@ -88,9 +88,95 @@ module.exports = {
             return "Course assigned successfully";
         }
 
-    }
+    },
 
     //LECTURERS
+    lecturers: [
+        {
+            lecturerID: "S100A",
+            lecturerName: "LectA",
+            courses: ['CourseA'],
+        },
+
+        {
+            lecturerID: "S100B",
+            lecturerName: "LectB",
+            courses: []
+        }
+    ],
+
+    //Add a new lecturer with their id and name
+    addLecturer(id, n) {
+        const existingLecturer = this.lecturers.some(lecturer => lecturer.lecturerID.toLowerCase() === id.toLowerCase());
+        if (existingLecturer) {
+            return "Lecturer is already added";
+        }
+
+        else {
+            this.lecturers.push({ lecturerID: id, lecturerName: n});
+            return "Lecturer registered successfully";
+        }
+
+    },
+
+    //Delete a lecturer record by their id
+    deleteLecturer(a) {
+        const existingLecturer = this.lecturers.some(lecturer => lecturer.lecturerID.toLowerCase() === a.toLowerCase());
+
+        if (!existingLecturer) {
+            return "Unable to delete Lecturer - Lecturer not found";
+        }
+
+        else {
+            this.lecturers.forEach(
+                (lecturer, index) => {
+                    if (lecturer.lecturerID === a) {
+                        this.lecturers.splice(index, 1);
+                    }
+                }
+            )
+            return "Lecturer record deleted successfully";
+        }
+    
+    },
+
+    //Retrieve a lecturer's record by id
+    getLecturerInfo(a) {
+        const existingLecturer = this.lecturers.find(lecturer => lecturer.lecturerID.toLowerCase() === a.toLowerCase());
+
+        if (existingLecturer) {
+            return "Lecturer Name is " + existingLecturer.lecturerName + " and Lecturer ID is " + existingLecturer.lecturerID;
+        }
+
+        else {
+            return "Lecturer doesn't exist";
+        }
+    },
+
+    //Retrive all lecturer records
+    listAllLecturers() {
+        return this.lecturers;
+    },
+
+    //Assign a course to a lecturer by using their id
+    assignLecturerToCourse(a, c) {
+        const existingLecturer = this.lecturers.find(lecturer => lecturer.lecturerID.toLowerCase() === a.toLowerCase());
+
+        if (!existingLecturer) {
+            return "Unable to assign Course - Lecturer not found";
+        }
+
+        else if (existingLecturer.courses.includes(c)) {
+            return "Lecturer is already registered in " + c;
+        }
+
+        else {
+            existingLecturer.courses.push(c);
+            return "Course assigned successfully";
+        }
+
+    },
+
 
     
 }

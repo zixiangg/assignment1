@@ -1,20 +1,45 @@
 module.exports = {
-    //Explain what function A does
-    
-    //STUDENTS
+
     students: [
         {
             adminNo: "221609S",
             name: "Student1",
-            courses: ["CourseA"],
+            courses: ["C1"],
         },
 
         {
             adminNo: "221000A",
             name: "Student2",
-            courses: ["CourseB"],
+            courses: ["C2"],
         }
     ],
+
+    lecturers: [
+        {
+            lecturerID: "S100A",
+            lecturerName: "LectA",
+            courses: ['C1'],
+        },
+
+        {
+            lecturerID: "S100B",
+            lecturerName: "LectB",
+            courses: []
+        }
+    ],
+
+    courses: [
+        {
+            courseID: 'C1',
+            courseName: 'CourseA',
+        },
+        {
+            courseID: 'C2',
+            courseName: 'CourseB',
+        }
+    ],
+
+    //STUDENTS
 
     //Register a new student with their admin number and name
     registerStudent(a, n) {
@@ -43,13 +68,14 @@ module.exports = {
             this.students.forEach(
                 (student, index) => {
                     if (student.adminNo.toLowerCase() === a.toLowerCase()) {
+                        //Removes 1 element from the index of a
                         this.students.splice(index, 1);
                     }
                 }
             )
             return "Student record deleted successfully";
         }
-    
+
     },
 
     //Retrieve a student's record by admin number
@@ -58,7 +84,7 @@ module.exports = {
 
         if (existingStudent) {
             return "Student Name is " + existingStudent.name + " and Admin Number is " + existingStudent.adminNo;
-            
+
         }
 
         else {
@@ -71,39 +97,8 @@ module.exports = {
         return this.students;
     },
 
-    //Assign a course to a student by using their admin number
-    assignStudentToCourse(a, c) {
-        const existingStudent = this.students.find(student => student.adminNo.toLowerCase() === a.toLowerCase());
-
-        if (!existingStudent) {
-            return "Unable to assign Course - Student not found";
-        }
-
-        else if (existingStudent.courses.includes(c)) {
-            return "Student is already registered in " + c;
-        }
-
-        else {
-            existingStudent.courses.push(c);
-            return "Course assigned successfully";
-        }
-
-    },
 
     //LECTURERS
-    lecturers: [
-        {
-            lecturerID: "S100A",
-            lecturerName: "LectA",
-            courses: ['CourseA'],
-        },
-
-        {
-            lecturerID: "S100B",
-            lecturerName: "LectB",
-            courses: []
-        }
-    ],
 
     //Add a new lecturer with their id and name
     addLecturer(id, n) {
@@ -113,7 +108,7 @@ module.exports = {
         }
 
         else {
-            this.lecturers.push({ lecturerID: id, lecturerName: n});
+            this.lecturers.push({ lecturerID: id, lecturerName: n });
             return "Lecturer registered successfully";
         }
 
@@ -137,7 +132,7 @@ module.exports = {
             )
             return "Lecturer record deleted successfully";
         }
-    
+
     },
 
     //Retrieve a lecturer's record by id
@@ -158,16 +153,105 @@ module.exports = {
         return this.lecturers;
     },
 
+    //COURSE
+
+    //Create a course with Course ID and Course Name
+    createCourse(id, n) {
+        //Ensure that Course ID is not repeated
+        const existingCourse = this.courses.some(course => course.courseID.toLowerCase() === id.toLowerCase());
+
+        if (existingCourse) {
+            return 'Course ID already exists';
+        }
+
+        else {
+            this.courses.push({ courseID: id, courseName: n });
+            return 'Course created!';
+        }
+    },
+
+    //Delete a course by its ID
+    deleteCourse(id) {
+        const existingCourse = this.courses.some(course => course.courseID.toLowerCase() === id.toLowerCase());
+
+        if (!existingCourse) {
+            return "Unable to delete Course - Course not found";
+        }
+
+        else {
+            this.courses.forEach(
+                (course, index) => {
+                    if (course.courseID.toLowerCase() === id.toLowerCase()) {
+                        this.courses.splice(index, 1);
+                    }
+                }
+            )
+            return "Course deleted successfully";
+        }
+    },
+
+    //Retrieve Course Info record by id
+    getCourseInfo(id) {
+        const existingCourse = this.courses.find(course => course.courseID.toLowerCase() === id.toLowerCase());
+
+        if (existingCourse) {
+            return "Course Name is " + existingCourse.courseName + " and Course ID is " + existingCourse.courseID;
+        }
+
+        else {
+            return "Course doesn't exist";
+        }
+    },
+
+    //Retrive number of courses
+    getNoOfCourses() {
+        return "There are " + this.courses.length + " courses available";
+    },
+
+    //List all courses
+    listAllCourses() {
+        return this.courses;
+    },
+
+    //Assign a course to a student by using their admin number
+    assignStudentToCourse(a, c) {
+        const existingStudent = this.students.find(student => student.adminNo.toLowerCase() === a.toLowerCase());
+        const existingCourse = existingStudent.courses.some(courseID => courseID.toLowerCase() === c.toLowerCase());
+
+        if (!existingStudent) {
+            return "Unable to assign Course - Student not found";
+        }
+
+        else if (existingCourse) {
+            return "Unable to assign Course - Course " + existingStudent.courses + " already assigned to Student of Admin Number " + existingStudent.adminNo;
+        }
+
+        else if (existingStudent.courses.includes(c)) {
+            return existingStudent.adminNo + " is already registered in " + c;
+        }
+
+        else {
+            existingStudent.courses.push(c);
+            return "Course assigned successfully";
+        }
+
+    },
+
     //Assign a course to a lecturer by using their id
     assignLecturerToCourse(a, c) {
         const existingLecturer = this.lecturers.find(lecturer => lecturer.lecturerID.toLowerCase() === a.toLowerCase());
+        const existingCourse = existingLecturer.courses.some(courseID => courseID.toLowerCase() === c.toLowerCase());
 
         if (!existingLecturer) {
             return "Unable to assign Course - Lecturer not found";
         }
 
+        else if (existingCourse) {
+            return "Unable to assign Course - Course " + existingLecturer.courses + " already assigned to Lecturer of ID " + existingLecturer.lecturerID;
+        }
+
         else if (existingLecturer.courses.includes(c)) {
-            return "Lecturer is already registered in " + c;
+            return existingLecturer.lecturerID + " is already registered in " + c;
         }
 
         else {
@@ -178,5 +262,4 @@ module.exports = {
     },
 
 
-    
 }

@@ -17,7 +17,17 @@ const schoolMgmt = require("./ZiXiang_StudentMgmt.js");
 
 //console.log(schoolMgmt.getLecturerInfo('S100d'));
 //console.log(schoolMgmt.listAllLecturers());
-console.log(schoolMgmt.listAllLecturers());
-console.log(schoolMgmt.assignLecturerToCourse('S100a', 'CourseA'));
-console.log(schoolMgmt.listAllLecturers());
+// console.log(schoolMgmt.listAllLecturers());
+// console.log(schoolMgmt.assignLecturerToCourse('S100a', 'CourseA'));
+// console.log(schoolMgmt.listAllLecturers());
 
+// console.log(schoolMgmt.deleteCourse('c1'));
+// console.log(schoolMgmt.getNoOfCourses());
+
+// console.log(schoolMgmt.listAllLecturers());
+// console.log(schoolMgmt.assignLecturerToCourse('S100b', 'c7'));
+// console.log(schoolMgmt.listAllLecturers());
+
+console.log(schoolMgmt.listAllStudents());
+console.log(schoolMgmt.assignStudentToCourse('221000A', 'c2'));
+console.log(schoolMgmt.listAllStudents());

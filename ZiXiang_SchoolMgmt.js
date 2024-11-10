@@ -217,18 +217,14 @@ module.exports = {
     //Assign a course to a student by using their admin number
     assignStudentToCourse(a, c) {
         const existingStudent = this.students.find(student => student.adminNo.toLowerCase() === a.toLowerCase());
-        const existingCourse = existingStudent.courses.some(courseID => courseID.toLowerCase() === c.toLowerCase());
 
         if (!existingStudent) {
             return "Unable to assign Course - Student not found";
         }
 
-        else if (existingCourse) {
+        const existingCourse = existingStudent.courses.some(courseID => courseID.toLowerCase() === c.toLowerCase());
+        if (existingCourse) {
             return "Unable to assign Course - Course " + existingStudent.courses + " already assigned to Student of Admin Number " + existingStudent.adminNo;
-        }
-
-        else if (existingStudent.courses.includes(c)) {
-            return existingStudent.adminNo + " is already registered in " + c;
         }
 
         else {
@@ -241,19 +237,19 @@ module.exports = {
     //Assign a course to a lecturer by using their id
     assignLecturerToCourse(a, c) {
         const existingLecturer = this.lecturers.find(lecturer => lecturer.lecturerID.toLowerCase() === a.toLowerCase());
-        const existingCourse = existingLecturer.courses.some(courseID => courseID.toLowerCase() === c.toLowerCase());
-
+        
         if (!existingLecturer) {
             return "Unable to assign Course - Lecturer not found";
         }
 
-        else if (existingCourse) {
+        const existingCourse = existingLecturer.courses.some(courseID => courseID.toLowerCase() === c.toLowerCase());
+        if (existingCourse) {
             return "Unable to assign Course - Course " + existingLecturer.courses + " already assigned to Lecturer of ID " + existingLecturer.lecturerID;
         }
 
-        // else if (existingLecturer.courses.includes(c)) {
-        //     return existingLecturer.lecturerID + " is already registered in " + c;
-        // }
+        else if (existingLecturer.courses.includes(c)) {
+            return existingLecturer.lecturerID + " is already registered in " + c;
+        }
 
         else {
             existingLecturer.courses.push(c);

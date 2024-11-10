@@ -1,5 +1,6 @@
 module.exports = {
 
+    //School Management Records
     students: [
         {
             adminNo: "221609S",
@@ -11,7 +12,7 @@ module.exports = {
             adminNo: "221000A",
             name: "Student2",
             courses: ["C2"],
-        }
+        },
     ],
 
     lecturers: [
@@ -50,7 +51,7 @@ module.exports = {
         }
 
         else {
-            this.students.push({ adminNo: a, name: n });
+            this.students.push({ adminNo: a, name: n, courses: [] });
             return "Student registered successfully";
         }
 
@@ -108,7 +109,7 @@ module.exports = {
         }
 
         else {
-            this.lecturers.push({ lecturerID: id, lecturerName: n });
+            this.lecturers.push({ lecturerID: id, lecturerName: n, courses: [] });
             return "Lecturer registered successfully";
         }
 
@@ -250,9 +251,9 @@ module.exports = {
             return "Unable to assign Course - Course " + existingLecturer.courses + " already assigned to Lecturer of ID " + existingLecturer.lecturerID;
         }
 
-        else if (existingLecturer.courses.includes(c)) {
-            return existingLecturer.lecturerID + " is already registered in " + c;
-        }
+        // else if (existingLecturer.courses.includes(c)) {
+        //     return existingLecturer.lecturerID + " is already registered in " + c;
+        // }
 
         else {
             existingLecturer.courses.push(c);

@@ -59,9 +59,9 @@ console.log(schoolMgmt.assignStudentToCourse('221609s', 'c3'));
 console.log(schoolMgmt.listAllStudents());
 
 // //Assign existing course to lecturer
-// console.log(schoolMgmt.listAllLecturers());
-// console.log(schoolMgmt.assignLecturerToCourse('S100b', 'c7'));
-// console.log(schoolMgmt.listAllLecturers());
+console.log(schoolMgmt.listAllLecturers());
+console.log(schoolMgmt.assignLecturerToCourse('S100b', 'c7'));
+console.log(schoolMgmt.listAllLecturers());
 
 
 
